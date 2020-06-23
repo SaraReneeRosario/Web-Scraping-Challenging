@@ -11,6 +11,7 @@ import requests
 import warnings
 warnings.filterwarnings('ignore')
 
+
 # Create Mission to Mars global dictionary that can be imported into Mongo
 mars_info = {}
 
@@ -80,7 +81,7 @@ def scrape_mars_image():
     # return mars_info
 
 # MARS WEATHER
-def scrape_mars_weather():
+'''def scrape_mars_weather():
     #technically only scraping from InSight rover
     # Initialize browser & set URL
     browser = init_browser()
@@ -88,16 +89,19 @@ def scrape_mars_weather():
 
     # Visit Mars Weather Twitter with splinter; save HTML object
     browser.visit(weather_url)
-    time.sleep(3)
+    time.sleep(5)
     html_weather = browser.html
     browser.quit()
 
     # Parse HTML with Beautiful Soup
     soup = bs(html_weather, 'html.parser')
-
+    
+    
     # Find all elements that contain tweets
     #tweets = soup.find_all('div', class_='js-tweet-text-container')
-    tweets = soup.find_all('div', class_="css-901oao r-hkyrab r-1qd0xha r-a023e6 r-16dba41 r-ad9z0x r-bcqeeo r-bnwqim r-qvutc0")
+    #tweets = soup.find_all('div', class_="css-901oao r-hkyrab r-1qd0xha r-a023e6 r-16dba41 r-ad9z0x r-bcqeeo r-bnwqim r-qvutc0")
+    tweets = soup.find_all("article").text
+  
 
     for i, tweet in enumerate(tweets):
         if "InSight sol" in tweet.text:
@@ -106,7 +110,7 @@ def scrape_mars_weather():
 
     # Dictionary entry for WEATHER TWEET
     mars_info['mars_weather'] = latest_mars_weather
-    
+'''   
 
 # MARS FACTS
 def scrape_mars_facts():
@@ -201,7 +205,7 @@ def scrape_mars_hemispheres():
     
 def scrape():
     scrape_nasa()
-    scrape_mars_weather()
+    #scrape_mars_weather()
     scrape_mars_facts()
     scrape_mars_hemispheres()
     #return mars_info #technically we shouldn't need to do this
