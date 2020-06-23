@@ -82,7 +82,8 @@ def scrape_mars_image():
     # return mars_info
 
 # MARS WEATHER
-'''def scrape_mars_weather():
+''''''
+def scrape_mars_weather():
     #technically only scraping from InSight rover
     # Initialize browser & set URL
     browser = init_browser()
@@ -97,21 +98,39 @@ def scrape_mars_image():
     # Parse HTML with Beautiful Soup
     soup = bs(html_weather, 'html.parser')
     
-    
+    #get probable image
+    imageanchor = soup.find_all("img")
+    weather_capture_url = "https://twitter.com/MarsWxReport/header_photo"
+
+    for image in imageanchor:
+        url = image["src"]
+        if "profile" not in url and "small" in url:
+            weather_capture_url = url
+            break
+
+
     # Find all elements that contain tweets
     #tweets = soup.find_all('div', class_='js-tweet-text-container')
     #tweets = soup.find_all('div', class_="css-901oao r-hkyrab r-1qd0xha r-a023e6 r-16dba41 r-ad9z0x r-bcqeeo r-bnwqim r-qvutc0")
-    tweets = soup.find_all("article").text
-  
+    tweets_articles = soup.find_all("article")
+    tweets = []
 
+    for article in tweets_articles:
+        tweet_pulls = article.text.replace('\n', ' ')
+        if "InSight sol" in tweet_pulls:
+            latest_mars_weather = "InSight sol" + tweet_pulls.split("InSight sol")[1]
+            break
+    '''    
     for i, tweet in enumerate(tweets):
         if "InSight sol" in tweet.text:
             latest_mars_weather = tweets[i].text.replace('\n', ' ')
             break
-
+    '''
     # Dictionary entry for WEATHER TWEET
     mars_info['mars_weather'] = latest_mars_weather
-'''   
+    mars_info['weather_img'] = weather_capture_url
+    mars_info['weather_url'] = weather_url
+'''  ''' 
 
 # MARS FACTS
 def scrape_mars_facts():
@@ -166,7 +185,7 @@ def scrape_mars_hemispheres():
         browser.visit(img_location)
         img_html= browser.html
         img_soup = bs(img_html, "html.parser")
-        img_url = img_soup.find_all('li')[1].a["href"]
+        img_url = img_soup.find_all('li')[0].a["href"]
         dictionary = {"title": title, "img_url": img_url}
         hemisphere_image_urls_download.append(dictionary)
     '''
@@ -208,7 +227,7 @@ def scrape():
     #mars_info = {}
     scrape_nasa()
     scrape_mars_image()
-    #scrape_mars_weather()
+    scrape_mars_weather()
     scrape_mars_facts()
     scrape_mars_hemispheres()
     return mars_info

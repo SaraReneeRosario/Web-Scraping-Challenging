@@ -31,7 +31,7 @@
   </div>
 
   <!-- New section with latest news -->
-  <div style="margin-left: 100px; padding-top: 44px;">
+  <div style="margin-left: 100px; padding-top: 44px; margin-right: 50px;">
     <div class="row">
       <div class="col-md-12">
         <div class="media">
@@ -50,57 +50,60 @@
 
       <!-- Left Side -->
       <!-- Row for Featured Mars Image -->
-      <div class="col-md-8">
+      <div class="col-md-7">
         <h3><b>Featured Mars Image</b></h3>
-        <img src={{mars_data.image_url}} height=auto width=750px>
+        <img src={{mars_data.image_url}} height=auto width="100%">
+        <hr>
+        <h4><b>Current Weather on Mars</b></h4>
+        <p>{{ mars_data.mars_weather}}</p>
       </div>
+      <!-- Row for Mars Facts HTML data -->
 
-      <!-- Right Side is divided into two rows -->
-      <!-- Row for Mars Weather Tweet -->
-      <div class="col-md-4">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="panel panel-default">
-              <div class="panel-body">
-                <h4><b>Current Weather on Mars</b></h4>
-                {{ mars_data.mars_weather}}
-                <hr class="my-4">
-              </div>
-            </div>
+
+      <div class="col-md-5">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <h4><b>Mars Facts</b></h4>
+            <p>{{ mars_data.tablestring | safe}}</p>
           </div>
         </div>
-
-        <!-- Row for Mars Facts HTML data -->
-        <div class="row">
-          <div class="col-md-12">
-            <div class="panel panel-default">
-              <div class="panel-body">
-                <h4><b>Mars Facts</b></h4>
-                <p>{{ mars_data.tablestring | safe}}</p>
-              </div>
-            </div>
-          </div>
-        </div>
+      </div>
+      <br>
+    </div>
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-8">
+        <img src="{{mars_data.weather_img}}" width="100%">
       </div>
     </div>
+  </div>
+  <!-- Right Side is divided into two rows -->
+  <!-- Row for Mars Weather Tweet -->
 
-    <!-- New Section is divided into a 2x2 panel for Hemisphere Images -->
-    <div class="row" style="margin-top:80px;">
-      <div class="page-header">
-        <h2 class="text-center"><b>Mars Hemispheres</b></h2>
-      </div>
+
+  </div>
+  <br>
+  <br>
+  <!-- New Section is divided into a 2x2 panel for Hemisphere Images -->
+
+  <div class="page-header">
+    <h2 class="text-center"><b>Mars Hemispheres</b></h2>
+    <hr>
+  </div>
+  <div class="container">
+    <div class="row">
       <!-- Loop through hemispheres dictionary with images and titles -->
       {% for hemisphere in mars_data.hemisphere_image_urls %}
       <div class="col-md-6">
-        <div class="thumbnail">
-          <img src="{{hemisphere.img_url}}">
-          <div class="caption">
-            <h3><b>{{hemisphere.title}}</b></h3>
-          </div>
+        <img src="{{hemisphere.img_url}}" , width="100%">
+        <div class="caption">
+          <h3><b>{{hemisphere.title}}</b></h3>
         </div>
-        {% endfor %}
       </div>
+      {% endfor %}
     </div>
+  </div>
+
 </body>
 
 </html>
