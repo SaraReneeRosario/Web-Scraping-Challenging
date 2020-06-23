@@ -9,6 +9,7 @@ import platform
 import time
 import requests
 import warnings
+import pymongo 
 warnings.filterwarnings('ignore')
 
 
@@ -204,14 +205,10 @@ def scrape_mars_hemispheres():
     mars_info['hemisphere_image_urls'] = hemisphere_image_urls
     
 def scrape():
+    #mars_info = {}
     scrape_nasa()
+    scrape_mars_image()
     #scrape_mars_weather()
     scrape_mars_facts()
     scrape_mars_hemispheres()
-    #return mars_info #technically we shouldn't need to do this
-    import pymongo 
-    conn = 'mongodb://localhost:27017'
-    client = pymongo.MongoClient(conn)
-    db = client.scrape_db
-    collection = db.items
-    collection.insert_one(mars_info)
+    return mars_info
