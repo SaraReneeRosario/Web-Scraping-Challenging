@@ -204,23 +204,10 @@ def scrape():
     scrape_mars_weather()
     scrape_mars_facts()
     scrape_mars_hemispheres()
-    return mars_info #technically we shouldn't need to do this
-
-'''
-[<img alt="USGS: Science for a Changing World" class="logo" height="60" src="/images/usgs_logo_main_2x.png"/>,
-<img alt="NASA" class="logo" height="65" src="/images/logos/nasa-logo-web-med.png"/>,
-<img alt="PDS Cartography and Imaging Science Node" class="logo" height="65" src="/images/pds_logo-invisible-web.png"/>,
-<img alt="Astropedia" src="/images/astropedia/astropedia-logo-main.png" style="width:200px;border:none;float:right;"/>,
-<img alt="Cerberus Hemisphere Enhanced thumbnail" class="thumb" src="/cache/images/39d3266553462198bd2fbc4d18fbed17_cerberus_enhanced.tif_thumb.png"/>,
-<img alt="Schiaparelli Hemisphere Enhanced thumbnail" class="thumb" src="/cache/images/08eac6e22c07fb1fe72223a79252de20_schiaparelli_enhanced.tif_thumb.png"/>,
-<img alt="Syrtis Major Hemisphere Enhanced thumbnail" class="thumb" src="/cache/images/55a0a1e2796313fdeafb17c35925e8ac_syrtis_major_enhanced.tif_thumb.png"/>,
-<img alt="Valles Marineris Hemisphere Enhanced thumbnail" class="thumb" src="/cache/images/4e59980c1c57f89c680c0e1ccabbeff1_valles_marineris_enhanced.tif_thumb.png"/>,
-<img alt="ISIS Logo" height="112" src="/images/logos/isis_2x.jpg" width="112"/>,
-<img alt="Nomenclature Logo" height="112" src="/images/logos/nomenclature_2x.jpg" width="112"/>,
-<img alt="Map-a-Planet Logo" height="112" src="/images/logos/map_a_planet_2x.jpg" width="112"/>,
-<img alt="PDS Logo" height="112" src="/images/pds_logo-black-web.png"/>,
-<img alt="RPIF Logo" height="112" src="/images/logos/rpif_2x.jpg" width="112"/>,
-<img alt="Photogrammetry Guest Faciltiy Logo" height="112" src="/images/logos/photogrammetry_2x.jpg" width="112"/>,
-<img alt="Pilot Logo" height="112" src="/images/logos/pilot_2x.jpg" width="112"/>,
-<img alt="MRCTR GIS Lab Logo" height="112" src="/images/logos/mrctr_man_2x.png" width="112"/>]
-'''
+    #return mars_info #technically we shouldn't need to do this
+    import pymongo 
+    conn = 'mongodb://localhost:27017'
+    client = pymongo.MongoClient(conn)
+    db = client.scrape_db
+    collection = db.items
+    collection.insert_one(mars_info)
