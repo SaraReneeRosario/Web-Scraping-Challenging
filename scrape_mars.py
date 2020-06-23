@@ -127,9 +127,9 @@ def scrape_mars_facts():
         col1 = description.replace(":", "")
         mars_facts_dictionary[col1] = mars_facts.iloc[i, 1]
 
+    html_table = html_table.replace("\n", "")
     mars_info['tablestring'] = html_table
     mars_info['tabledictionary'] = mars_facts_dictionary
-    browser.quit()
     
 # Mars Hemisphere
 def scrape_mars_hemispheres():
